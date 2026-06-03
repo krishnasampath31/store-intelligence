@@ -1,50 +1,20 @@
-# Store Intelligence System
+## Current MVP Status
 
-Purplle Tech Challenge 2026 Submission
+This submission demonstrates the architecture, API layer, event schema, analytics design, and deployment structure for a Store Intelligence System.
 
-## Overview
+The current implementation focuses on:
 
-This project builds an end-to-end Store Intelligence System from raw CCTV footage.
+* Event ingestion
+* Metrics APIs
+* Funnel APIs
+* Health monitoring
+* Docker deployment
+* Documentation of architecture and trade-offs
 
-Pipeline:
+Future work includes:
 
-CCTV Footage → Detection → Tracking → Event Generation → Analytics API → Dashboard
-
-## Features
-
-* Entry and Exit Detection
-* Visitor Tracking
-* Zone Analytics
-* Billing Queue Monitoring
-* Conversion Funnel Analytics
-* Heatmap Analytics
-* Anomaly Detection
-* Health Monitoring
-
-## API Endpoints
-
-* POST /events/ingest
-* GET /stores/{id}/metrics
-* GET /stores/{id}/funnel
-* GET /stores/{id}/heatmap
-* GET /stores/{id}/anomalies
-* GET /health
-
-## Technology Stack
-
-* Python
-* FastAPI
-* OpenCV
-* YOLO
-* SQLite
-* Docker
-
-## Running
-
-```bash
-docker compose up
-```
-
-## Dataset
-
-Dataset and CCTV footage are excluded from this repository as per challenge rules.
+* Real-time YOLO detection
+* Multi-camera tracking
+* Kafka event streaming
+* Dashboard visualization
+* Production-grade anomaly detection
