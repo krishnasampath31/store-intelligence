@@ -1,9 +1,12 @@
 from fastapi import FastAPI
+from app.models import Event
 
 app = FastAPI(
 title="Store Intelligence API",
 version="1.0.0"
 )
+
+events_db = []
 
 @app.get("/")
 def root():
@@ -12,12 +15,20 @@ return {
 "status": "running"
 }
 
-@app.get("/health")
-def health():
+@app.post("/events/ingest")
+def ingest(events: list[Event]):
+inserted = 0
+
+```
+for event in events:
+    events_db.append(event.dict())
+    inserted += 1
+
 return {
-"status": "healthy",
-"stores_active": 2
+    "status": "success",
+    "inserted": inserted
 }
+```
 
 @app.get("/stores/{store_id}/metrics")
 def metrics(store_id: str):
@@ -32,7 +43,6 @@ return {
 @app.get("/stores/{store_id}/funnel")
 def funnel(store_id: str):
 return {
-"store_id": store_id,
 "entry": 120,
 "zone_visit": 80,
 "billing": 40,
@@ -42,23 +52,27 @@ return {
 @app.get("/stores/{store_id}/heatmap")
 def heatmap(store_id: str):
 return {
-"store_id": store_id,
 "zones": [
 {"zone": "Faces", "score": 90},
-{"zone": "Loreal", "score": 75},
-{"zone": "Purplle", "score": 60}
+{"zone": "Purplle", "score": 70}
 ]
 }
 
 @app.get("/stores/{store_id}/anomalies")
 def anomalies(store_id: str):
 return {
-"store_id": store_id,
 "anomalies": [
 {
 "type": "QUEUE_SPIKE",
-"severity": "WARN"
+"severity": "WARN",
+"suggested_action": "Open another billing counter"
 }
 ]
 }
 
+@app.get("/health")
+def health():
+return {
+"status": "healthy",
+"last_event_count": len(events_db)
+}
